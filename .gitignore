@@ -24,3 +24,6 @@ hs_err_pid*
 
 # JetBrains files
 .idea/
+
+# Gradle files
+.gradle/
