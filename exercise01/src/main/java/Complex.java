@@ -36,6 +36,10 @@ public class Complex {
         return new Complex(x.real / (abs * abs), -x.imag / (abs * abs));
     }
 
+    public static Complex square(Complex x) {
+        return multiply(x, x);
+    }
+
     public static double absoluteValue(Complex x) {
         return Math.sqrt(x.real * x.real + x.imag * x.imag);
     }
@@ -56,4 +60,28 @@ public class Complex {
         this.imag = imag;
     }
 
+    @Override
+    public String toString() {
+        if (0 < imag) {
+            return Double.toString(real) + '+' + imag + 'i';
+        } else if (0 == imag) {
+            return Double.toString(real);
+        } else {
+            return Double.toString(real) + imag + 'i';
+        }
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        } else if (this == obj) {
+            return true;
+        } else if (getClass() != obj.getClass()) {
+            return false;
+        } else {
+            Complex other = (Complex) obj;
+            return this.real == other.real && this.imag == other.imag;
+        }
+    }
 }
