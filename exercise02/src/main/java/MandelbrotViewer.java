@@ -26,11 +26,27 @@ public class MandelbrotViewer extends Application {
     }
 
     private void paintScene(PixelWriter wr, int width, int height) {
-        for (int x = 0; x < width; x++) {
-            int y = (int) (height / 2 * (1 - Math.sin(6 * Math.PI / width * x)));
-            Color c = Color.hsb(360 * x / ((float) width), 1.0f, 1.0f);
-            for (int p = height / 2; p <= y; p++) wr.setColor(x, p, c);
-            for (int p = y; p <= height / 2; p++) wr.setColor(x, p, c);
+        final int max_iter = 40;
+        final int radius = 2;
+
+        for (int x = 0; x < width; ++x) {
+            for (int y = 0; y < height; ++y) {
+                Complex c = new Complex(
+                        3. * x / (width - 1.) - 2., 3. * y / (height - 1.) - 1.5
+                );
+
+                Complex z = new Complex(0, 0);
+                int iter = 0;
+
+                do {
+                    z = Complex.add(Complex.square(z), c);
+                    ++iter;
+                } while (iter < max_iter && Complex.absoluteValue(z) < radius);
+
+                final double color_val = iter;
+                Color color = Color.hsb(color_val, 1.0f, 1.0f);
+                wr.setColor(x, y, color);
+            }
         }
     }
 }
