@@ -43,8 +43,8 @@ public class MandelbrotViewer extends Application {
                     ++iter;
                 } while (iter < max_iter && Complex.absoluteValue(z) < radius);
 
-                final double color_val = iter;
-                Color color = Color.hsb(color_val, 1.0f, 1.0f);
+                final double color_val = (double) iter / (double) max_iter;
+                Color color = Color.hsb(360 * color_val, 1.0f, 1.0f);
                 wr.setColor(x, y, color);
             }
         }
