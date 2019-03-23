@@ -6,11 +6,13 @@
 package jdraw.figures;
 
 import jdraw.framework.Figure;
+import jdraw.framework.FigureEvent;
 import jdraw.framework.FigureHandle;
 import jdraw.framework.FigureListener;
 
 import java.awt.*;
 import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
  * Represents rectangles in JDraw.
@@ -48,16 +50,16 @@ public class Rect implements Figure {
         g.drawRect(rectangle.x, rectangle.y, rectangle.width, rectangle.height);
     }
 
+    private final List<FigureListener> figureListenerList =
+            new CopyOnWriteArrayList<>();
+
     @Override
     public void setBounds(Point origin, Point corner) {
         rectangle.setFrameFromDiagonal(origin, corner);
-        // TODO notification of change
-    }
 
-    @Override
-    public void move(int dx, int dy) {
-        rectangle.setLocation(rectangle.x + dx, rectangle.y + dy);
-        // TODO notification of change
+        for (FigureListener listener : figureListenerList) {
+            listener.figureChanged(new FigureEvent(this));
+        }
     }
 
     @Override
@@ -82,13 +84,23 @@ public class Rect implements Figure {
     }
 
     @Override
+    public void move(int dx, int dy) {
+        if (dx != 0 || dy != 0) {
+            rectangle.setLocation(rectangle.x + dx, rectangle.y + dy);
+            for (FigureListener listener : figureListenerList) {
+                listener.figureChanged(new FigureEvent(this));
+            }
+        }
+    }
+
+    @Override
     public void addFigureListener(FigureListener listener) {
-        // TODO Auto-generated method stub
+        figureListenerList.add(listener);
     }
 
     @Override
     public void removeFigureListener(FigureListener listener) {
-        // TODO Auto-generated method stub
+        figureListenerList.remove(listener);
     }
 
     @Override
