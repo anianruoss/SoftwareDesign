@@ -7,7 +7,6 @@ package jdraw.figures;
 
 import jdraw.framework.DrawContext;
 import jdraw.framework.DrawTool;
-import jdraw.framework.DrawView;
 
 import javax.swing.*;
 import java.awt.*;
@@ -19,23 +18,7 @@ import java.awt.event.MouseEvent;
  * @author Christoph Denzler
  * @see jdraw.framework.Figure
  */
-public class RectTool implements DrawTool {
-
-    /**
-     * the image resource path.
-     */
-    private static final String IMAGES = "/images/";
-
-    /**
-     * The context we use for drawing.
-     */
-    private final DrawContext context;
-
-    /**
-     * The context's view. This variable can be used as a shortcut, i.e.
-     * instead of calling context.getView().
-     */
-    private final DrawView view;
+public class RectTool extends BaseFigureTool implements DrawTool {
 
     /**
      * Temporary variable. During rectangle creation (during a
@@ -57,19 +40,7 @@ public class RectTool implements DrawTool {
      * @param context a context to use this tool in.
      */
     public RectTool(DrawContext context) {
-        this.context = context;
-        this.view = context.getView();
-    }
-
-    /**
-     * Deactivates the current mode by resetting the cursor
-     * and clearing the status bar.
-     *
-     * @see jdraw.framework.DrawTool#deactivate()
-     */
-    @Override
-    public void deactivate() {
-        this.context.showStatusText("");
+        super(context);
     }
 
     /**
@@ -134,11 +105,6 @@ public class RectTool implements DrawTool {
         newRect = null;
         anchor = null;
         this.context.showStatusText("Rectangle Mode");
-    }
-
-    @Override
-    public Cursor getCursor() {
-        return Cursor.getPredefinedCursor(Cursor.CROSSHAIR_CURSOR);
     }
 
     @Override

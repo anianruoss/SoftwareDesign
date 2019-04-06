@@ -4,6 +4,8 @@
  */
 package jdraw.std;
 
+import jdraw.figures.EllipseTool;
+import jdraw.figures.LineTool;
 import jdraw.figures.RectTool;
 import jdraw.framework.*;
 
@@ -93,9 +95,7 @@ public class StdContext extends AbstractContext {
         editMenu.addSeparator();
         JMenuItem clear = new JMenuItem("Clear");
         editMenu.add(clear);
-        clear.addActionListener(e -> {
-            getModel().removeAllFigures();
-        });
+        clear.addActionListener(e -> getModel().removeAllFigures());
 
         editMenu.addSeparator();
         JMenuItem group = new JMenuItem("Group");
@@ -110,14 +110,14 @@ public class StdContext extends AbstractContext {
 
         JMenu orderMenu = new JMenu("Order...");
         JMenuItem frontItem = new JMenuItem("Bring To Front");
-        frontItem.addActionListener(e -> {
-            bringToFront(getView().getModel(), getView().getSelection());
-        });
+        frontItem.addActionListener(e ->
+                bringToFront(getView().getModel(), getView().getSelection())
+        );
         orderMenu.add(frontItem);
         JMenuItem backItem = new JMenuItem("Send To Back");
-        backItem.addActionListener(e -> {
-            sendToBack(getView().getModel(), getView().getSelection());
-        });
+        backItem.addActionListener(e ->
+                sendToBack(getView().getModel(), getView().getSelection())
+        );
         orderMenu.add(backItem);
         editMenu.add(orderMenu);
 
@@ -157,9 +157,12 @@ public class StdContext extends AbstractContext {
 
     @Override
     protected void doRegisterDrawTools() {
-        // TODO Add new figure tools here
         DrawTool rectangleTool = new RectTool(this);
         addTool(rectangleTool);
+        DrawTool ellipseTool = new EllipseTool(this);
+        addTool(ellipseTool);
+        DrawTool lineTool = new LineTool(this);
+        addTool(lineTool);
     }
 
     /**
@@ -172,7 +175,7 @@ public class StdContext extends AbstractContext {
     public void bringToFront(DrawModel model, List<Figure> selection) {
         // the figures in the selection are ordered according to the order in
         // the model
-        List<Figure> orderedSelection = new LinkedList<Figure>();
+        List<Figure> orderedSelection = new LinkedList<>();
         int pos = 0;
         for (Figure f : model.getFigures()) {
             pos++;
@@ -195,7 +198,7 @@ public class StdContext extends AbstractContext {
     public void sendToBack(DrawModel model, List<Figure> selection) {
         // the figures in the selection are ordered according to the order in
         // the model
-        List<Figure> orderedSelection = new LinkedList<Figure>();
+        List<Figure> orderedSelection = new LinkedList<>();
         for (Figure f : model.getFigures()) {
             if (selection.contains(f)) {
                 orderedSelection.add(f);

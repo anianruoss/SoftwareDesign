@@ -12,14 +12,13 @@ import jdraw.framework.FigureListener;
 
 import java.awt.*;
 import java.util.List;
-import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
  * Represents rectangles in JDraw.
  *
  * @author Christoph Denzler
  */
-public class Rect implements Figure {
+public class Rect extends BaseFigure implements Figure {
     /**
      * Use the java.awt.Rectangle in order to save/reuse code.
      */
@@ -49,9 +48,6 @@ public class Rect implements Figure {
         g.setColor(Color.BLACK);
         g.drawRect(rectangle.x, rectangle.y, rectangle.width, rectangle.height);
     }
-
-    private final List<FigureListener> figureListenerList =
-            new CopyOnWriteArrayList<>();
 
     @Override
     public void setBounds(Point origin, Point corner) {
@@ -91,21 +87,6 @@ public class Rect implements Figure {
                 listener.figureChanged(new FigureEvent(this));
             }
         }
-    }
-
-    @Override
-    public void addFigureListener(FigureListener listener) {
-        figureListenerList.add(listener);
-    }
-
-    @Override
-    public void removeFigureListener(FigureListener listener) {
-        figureListenerList.remove(listener);
-    }
-
-    @Override
-    public Figure clone() {
-        return null;
     }
 
 }
