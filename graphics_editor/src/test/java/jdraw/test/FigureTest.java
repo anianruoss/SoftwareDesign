@@ -1,18 +1,38 @@
 package jdraw.test;
 
+import jdraw.figures.Ellipse;
+import jdraw.figures.Line;
+import jdraw.figures.Rect;
 import jdraw.framework.Figure;
 import jdraw.framework.FigureEvent;
 import jdraw.framework.FigureListener;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
 
 import java.awt.*;
+import java.util.Arrays;
+import java.util.Collection;
 
 import static junit.framework.TestCase.assertEquals;
 
-abstract public class BaseFigureTest {
-    Figure f;
-    Figure g;
-    int cnt;
+@RunWith(Parameterized.class)
+public class FigureTest {
+    @Parameterized.Parameter()
+    public Figure f;
+    @Parameterized.Parameter(1)
+    public Figure g;
+    private int cnt = 0;
+
+    @Parameterized.Parameters(name = "{0}")
+    public static Collection<Object[]> data() {
+        return Arrays.asList(new Object[][]{
+                {new Ellipse(1, 1, 20, 10), new Ellipse(10, 10, 10, 10)},
+                {new Rect(1, 1, 20, 10), new Rect(10, 10, 10, 10)},
+                {new Line(1, 1, 20, 10), new Line(10, 10, 10, 10)},
+        });
+    }
+
 
     @Test
     public void testNotification1() {
