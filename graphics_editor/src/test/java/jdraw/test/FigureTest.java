@@ -26,10 +26,23 @@ public class FigureTest {
 
     @Parameterized.Parameters(name = "{0}")
     public static Collection<Object[]> data() {
+        Point fStart = new Point(1, 1);
+        Point fEnd = new Point(21, 11);
+        Point gStart = new Point(10, 10);
+        Point gEnd = new Point(20, 20);
+
+        Ellipse fEllipse = new Ellipse(fStart, fEnd);
+        Ellipse gEllipse = new Ellipse(gStart, gEnd);
+
+        Rect fRectangle = new Rect(fStart, fEnd);
+        Rect gRectangle = new Rect(gStart, gEnd);
+
+        Line fLine = new Line(fStart, fEnd);
+        Line gLine = new Line(gStart, gEnd);
+
+
         return Arrays.asList(new Object[][]{
-                {new Ellipse(1, 1, 20, 10), new Ellipse(10, 10, 10, 10)},
-                {new Rect(1, 1, 20, 10), new Rect(10, 10, 10, 10)},
-                {new Line(1, 1, 20, 10), new Line(10, 10, 10, 10)},
+                {fEllipse, gEllipse}, {fRectangle, gRectangle}, {fLine, gLine}
         });
     }
 
