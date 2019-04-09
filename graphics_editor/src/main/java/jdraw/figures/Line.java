@@ -1,19 +1,22 @@
 package jdraw.figures;
 
 import jdraw.framework.Figure;
-import jdraw.framework.FigureEvent;
-import jdraw.framework.FigureHandle;
 
 import java.awt.*;
 import java.awt.geom.Line2D;
-import java.util.List;
 
-public class Line extends BaseFigure implements Figure {
+public class Line extends AbstractFigure implements Figure {
     private final Line2D.Double line;
+    private static final int TOL = 6;
 
-    public Line(int x, int y, int w, int h) {
-        line = new Line2D.Double(x, y, x + w, y + h);
+    public Line(Point start, Point end) {
+        line = new Line2D.Double(start, end);
     }
+
+    public Line(Point point) {
+        line = new Line2D.Double(point, point);
+    }
+
 
     @Override
     public void draw(Graphics g) {
@@ -32,29 +35,22 @@ public class Line extends BaseFigure implements Figure {
             line.setLine(
                     line.x1 + dx, line.y1 + dy, line.x2 + dx, line.y2 + dy
             );
-
-            figureListenerList.forEach(
-                    figureListener -> figureListener.figureChanged(
-                            new FigureEvent(this)
-                    )
-            );
+            propagateFigureEvent();
         }
     }
 
     @Override
     public boolean contains(int x, int y) {
-        return line.contains(x, y);
+        return line.ptSegDist(x, y) <= TOL;
     }
 
     @Override
     public void setBounds(Point origin, Point corner) {
+        Rectangle original = line.getBounds();
         line.setLine(origin, corner);
-
-        figureListenerList.forEach(
-                figureListener -> figureListener.figureChanged(
-                        new FigureEvent(this)
-                )
-        );
+        if (!original.equals(line.getBounds())) {
+            propagateFigureEvent();
+        }
     }
 
     @Override
@@ -62,8 +58,4 @@ public class Line extends BaseFigure implements Figure {
         return line.getBounds();
     }
 
-    @Override
-    public List<FigureHandle> getHandles() {
-        return null;
-    }
 }
