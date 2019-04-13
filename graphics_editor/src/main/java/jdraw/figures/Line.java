@@ -1,9 +1,13 @@
 package jdraw.figures;
 
+import jdraw.figures.handles.Handle;
+import jdraw.figures.handles.NorthWestHandleState;
+import jdraw.figures.handles.SouthEastHandleState;
 import jdraw.framework.Figure;
 
 import java.awt.*;
 import java.awt.geom.Line2D;
+import java.util.ArrayList;
 
 public class Line extends AbstractFigure implements Figure {
     private final Line2D.Double line;
@@ -11,10 +15,26 @@ public class Line extends AbstractFigure implements Figure {
 
     public Line(Point start, Point end) {
         line = new Line2D.Double(start, end);
+        initializeHandles();
     }
 
     public Line(Point point) {
         line = new Line2D.Double(point, point);
+        initializeHandles();
+    }
+
+    @Override
+    public void initializeHandles() {
+        Handle northWestHandle = new Handle(this);
+        Handle southEastHandle = new Handle(this);
+
+        northWestHandle.setState(new NorthWestHandleState(northWestHandle));
+        southEastHandle.setState(new SouthEastHandleState(southEastHandle));
+
+        handles = new ArrayList<>(2);
+
+        handles.add(northWestHandle);
+        handles.add(southEastHandle);
     }
 
 

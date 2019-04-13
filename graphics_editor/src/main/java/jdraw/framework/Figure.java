@@ -105,4 +105,6 @@ public interface Figure extends Serializable, Cloneable {
      * @return clone of figure
      */
     Figure clone();
+
+    void initializeHandles();
 }
