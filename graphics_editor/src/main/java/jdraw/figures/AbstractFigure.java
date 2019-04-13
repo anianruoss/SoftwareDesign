@@ -11,6 +11,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
 abstract public class AbstractFigure implements Figure {
     private final List<FigureListener> figureListenerList =
             new CopyOnWriteArrayList<>();
+    List<FigureHandle> handles;
 
     @Override
     public Figure clone() {
@@ -39,7 +40,6 @@ abstract public class AbstractFigure implements Figure {
 
     @Override
     public List<FigureHandle> getHandles() {
-        return null;
+        return handles;
     }
-
 }
