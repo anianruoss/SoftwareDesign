@@ -2,6 +2,7 @@ package jdraw.figures.handles;
 
 
 import jdraw.framework.DrawView;
+import jdraw.framework.Figure;
 
 import java.awt.*;
 import java.awt.event.MouseEvent;
@@ -9,6 +10,8 @@ import java.awt.event.MouseEvent;
 public interface HandleState {
 
     Point getLocation();
+
+    Figure getOwner();
 
     Cursor getCursor();
 

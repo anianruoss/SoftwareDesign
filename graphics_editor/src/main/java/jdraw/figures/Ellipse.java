@@ -20,22 +20,48 @@ public class Ellipse extends AbstractRectangularFigure {
 
     @Override
     public void initializeHandles() {
-        Handle northWestHandle = new Handle(this);
-        Handle northEastHandle = new Handle(this);
-        Handle southWestHandle = new Handle(this);
-        Handle southEastHandle = new Handle(this);
-
-        northWestHandle.setState(new NorthWestHandleState(northWestHandle));
-        northEastHandle.setState(new NorthEastHandleState(northEastHandle));
-        southWestHandle.setState(new SouthWestHandleState(southWestHandle));
-        southEastHandle.setState(new SouthEastHandleState(southEastHandle));
-
         handles = new ArrayList<>(4);
 
-        handles.add(northWestHandle);
-        handles.add(northEastHandle);
-        handles.add(southWestHandle);
-        handles.add(southEastHandle);
+        handles.add(new Handle(new NorthWestHandleState(this)));
+        handles.add(new Handle(new NorthEastHandleState(this)));
+        handles.add(new Handle(new SouthWestHandleState(this)));
+        handles.add(new Handle(new SouthEastHandleState(this)));
+    }
+
+    @Override
+    public void swapHorizontal() {
+        Handle NW = (Handle) handles.get(0);
+        Handle NE = (Handle) handles.get(1);
+        Handle SW = (Handle) handles.get(2);
+        Handle SE = (Handle) handles.get(3);
+
+        HandleState NWstate = NW.getState();
+        HandleState NEstate = NE.getState();
+        HandleState SWstate = SW.getState();
+        HandleState SEstate = SE.getState();
+
+        NW.setState(NEstate);
+        NE.setState(NWstate);
+        SW.setState(SEstate);
+        SE.setState(SWstate);
+    }
+
+    @Override
+    public void swapVertical() {
+        Handle NW = (Handle) handles.get(0);
+        Handle NE = (Handle) handles.get(1);
+        Handle SW = (Handle) handles.get(2);
+        Handle SE = (Handle) handles.get(3);
+
+        HandleState NWstate = NW.getState();
+        HandleState NEstate = NE.getState();
+        HandleState SWstate = SW.getState();
+        HandleState SEstate = SE.getState();
+
+        NW.setState(SWstate);
+        NE.setState(SEstate);
+        SW.setState(NWstate);
+        SE.setState(NEstate);
     }
 
     @Override

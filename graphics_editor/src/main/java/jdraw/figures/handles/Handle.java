@@ -8,11 +8,10 @@ import java.awt.*;
 import java.awt.event.MouseEvent;
 
 public class Handle implements FigureHandle {
-    private final Figure owner;
     private HandleState state;
 
-    public Handle(Figure owner) {
-        this.owner = owner;
+    public Handle(HandleState state) {
+        this.state = state;
     }
 
     public HandleState getState() {
@@ -25,7 +24,7 @@ public class Handle implements FigureHandle {
 
     @Override
     public Figure getOwner() {
-        return owner;
+        return state.getOwner();
     }
 
     @Override

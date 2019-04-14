@@ -1,8 +1,6 @@
 package jdraw.figures;
 
-import jdraw.figures.handles.Handle;
-import jdraw.figures.handles.NorthWestHandleState;
-import jdraw.figures.handles.SouthEastHandleState;
+import jdraw.figures.handles.*;
 import jdraw.framework.Figure;
 
 import java.awt.*;
@@ -25,16 +23,50 @@ public class Line extends AbstractFigure implements Figure {
 
     @Override
     public void initializeHandles() {
-        Handle northWestHandle = new Handle(this);
-        Handle southEastHandle = new Handle(this);
-
-        northWestHandle.setState(new NorthWestHandleState(northWestHandle));
-        southEastHandle.setState(new SouthEastHandleState(southEastHandle));
-
         handles = new ArrayList<>(2);
 
-        handles.add(northWestHandle);
-        handles.add(southEastHandle);
+        handles.add(new Handle(new NorthWestHandleState(this)));
+        handles.add(new Handle(new SouthEastHandleState(this)));
+    }
+
+    @Override
+    public void swapHorizontal() {
+        handles.forEach(handle -> {
+                    HandleState state = ((Handle) handle).getState();
+
+                    if (state instanceof NorthWestHandleState) {
+                        ((Handle) handle).setState(new NorthEastHandleState(this));
+                    } else if (state instanceof NorthEastHandleState) {
+                        ((Handle) handle).setState(new NorthWestHandleState(this));
+                    } else if (state instanceof SouthWestHandleState) {
+                        ((Handle) handle).setState(new SouthEastHandleState(this));
+                    } else if (state instanceof SouthEastHandleState) {
+                        ((Handle) handle).setState(new SouthWestHandleState(this));
+                    } else {
+                        throw new IllegalArgumentException();
+                    }
+                }
+        );
+    }
+
+    @Override
+    public void swapVertical() {
+        handles.forEach(handle -> {
+                    HandleState state = ((Handle) handle).getState();
+
+                    if (state instanceof NorthWestHandleState) {
+                        ((Handle) handle).setState(new SouthWestHandleState(this));
+                    } else if (state instanceof NorthEastHandleState) {
+                        ((Handle) handle).setState(new SouthEastHandleState(this));
+                    } else if (state instanceof SouthWestHandleState) {
+                        ((Handle) handle).setState(new NorthWestHandleState(this));
+                    } else if (state instanceof SouthEastHandleState) {
+                        ((Handle) handle).setState(new NorthEastHandleState(this));
+                    } else {
+                        throw new IllegalArgumentException();
+                    }
+                }
+        );
     }
 
 

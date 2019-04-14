@@ -1,19 +1,20 @@
 package jdraw.figures.handles;
 
 import jdraw.framework.DrawView;
+import jdraw.framework.Figure;
 
 import java.awt.*;
 import java.awt.event.MouseEvent;
 
 public class NorthHandleState extends AbstractHandleState {
 
-    public NorthHandleState(Handle handle) {
-        super(handle);
+    public NorthHandleState(Figure owner) {
+        super(owner);
     }
 
     @Override
     public Point getLocation() {
-        Rectangle bounds = handle.getOwner().getBounds();
+        Rectangle bounds = getOwner().getBounds();
         return new Point(bounds.x + bounds.width / 2, bounds.y);
     }
 
@@ -24,14 +25,14 @@ public class NorthHandleState extends AbstractHandleState {
 
     @Override
     public void dragInteraction(int x, int y, MouseEvent e, DrawView v) {
-        Rectangle bounds = handle.getOwner().getBounds();
-        handle.getOwner().setBounds(
+        Rectangle bounds = getOwner().getBounds();
+        getOwner().setBounds(
                 new Point(bounds.x, y),
                 new Point(bounds.x + bounds.width, bounds.y + bounds.height)
         );
 
         if (bounds.y + bounds.height < y) {
-            handle.setState(new SouthHandleState(handle));
+            getOwner().swapVertical();
         }
     }
 

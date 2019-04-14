@@ -1,14 +1,20 @@
 package jdraw.figures.handles;
 
 import jdraw.framework.DrawView;
+import jdraw.framework.Figure;
 
 import java.awt.event.MouseEvent;
 
 public abstract class AbstractHandleState implements HandleState {
-    final Handle handle;
+    private final Figure owner;
 
-    AbstractHandleState(Handle handle) {
-        this.handle = handle;
+    AbstractHandleState(Figure owner) {
+        this.owner = owner;
+    }
+
+    @Override
+    public Figure getOwner() {
+        return owner;
     }
 
     @Override
