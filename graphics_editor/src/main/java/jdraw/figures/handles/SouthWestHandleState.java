@@ -39,4 +39,14 @@ public class SouthWestHandleState extends AbstractHandleState {
         }
     }
 
+    @Override
+    public HandleState swapHorizontal() {
+        return new SouthEastHandleState(getOwner());
+    }
+
+    @Override
+    public HandleState swapVertical() {
+        return new NorthWestHandleState(getOwner());
+    }
+
 }

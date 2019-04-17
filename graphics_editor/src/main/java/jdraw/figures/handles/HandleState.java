@@ -20,4 +20,8 @@ public interface HandleState {
     void dragInteraction(int x, int y, MouseEvent e, DrawView v);
 
     void stopInteraction(int x, int y, MouseEvent e, DrawView v);
+
+    HandleState swapHorizontal();
+
+    HandleState swapVertical();
 }

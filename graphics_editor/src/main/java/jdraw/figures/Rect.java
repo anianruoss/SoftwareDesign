@@ -37,54 +37,6 @@ public class Rect extends AbstractRectangularFigure {
     }
 
     @Override
-    public void swapHorizontal() {
-        Handle NW = (Handle) handles.get(0);
-        Handle NE = (Handle) handles.get(1);
-        Handle SW = (Handle) handles.get(2);
-        Handle SE = (Handle) handles.get(3);
-        Handle W = (Handle) handles.get(5);
-        Handle E = (Handle) handles.get(6);
-
-        HandleState NWstate = NW.getState();
-        HandleState NEstate = NE.getState();
-        HandleState SWstate = SW.getState();
-        HandleState SEstate = SE.getState();
-        HandleState Wstate = W.getState();
-        HandleState Estate = E.getState();
-
-        NW.setState(NEstate);
-        NE.setState(NWstate);
-        SW.setState(SEstate);
-        SE.setState(SWstate);
-        W.setState(Estate);
-        E.setState(Wstate);
-    }
-
-    @Override
-    public void swapVertical() {
-        Handle NW = (Handle) handles.get(0);
-        Handle NE = (Handle) handles.get(1);
-        Handle SW = (Handle) handles.get(2);
-        Handle SE = (Handle) handles.get(3);
-        Handle N = (Handle) handles.get(4);
-        Handle S = (Handle) handles.get(7);
-
-        HandleState NWstate = NW.getState();
-        HandleState NEstate = NE.getState();
-        HandleState SWstate = SW.getState();
-        HandleState SEstate = SE.getState();
-        HandleState Nstate = N.getState();
-        HandleState Sstate = S.getState();
-
-        NW.setState(SWstate);
-        NE.setState(SEstate);
-        SW.setState(NWstate);
-        SE.setState(NEstate);
-        N.setState(Sstate);
-        S.setState(Nstate);
-    }
-
-    @Override
     public void draw(Graphics g) {
         Rectangle r = getBounds();
 

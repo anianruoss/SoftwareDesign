@@ -28,41 +28,6 @@ public class Ellipse extends AbstractRectangularFigure {
         handles.add(new Handle(new SouthEastHandleState(this)));
     }
 
-    @Override
-    public void swapHorizontal() {
-        Handle NW = (Handle) handles.get(0);
-        Handle NE = (Handle) handles.get(1);
-        Handle SW = (Handle) handles.get(2);
-        Handle SE = (Handle) handles.get(3);
-
-        HandleState NWstate = NW.getState();
-        HandleState NEstate = NE.getState();
-        HandleState SWstate = SW.getState();
-        HandleState SEstate = SE.getState();
-
-        NW.setState(NEstate);
-        NE.setState(NWstate);
-        SW.setState(SEstate);
-        SE.setState(SWstate);
-    }
-
-    @Override
-    public void swapVertical() {
-        Handle NW = (Handle) handles.get(0);
-        Handle NE = (Handle) handles.get(1);
-        Handle SW = (Handle) handles.get(2);
-        Handle SE = (Handle) handles.get(3);
-
-        HandleState NWstate = NW.getState();
-        HandleState NEstate = NE.getState();
-        HandleState SWstate = SW.getState();
-        HandleState SEstate = SE.getState();
-
-        NW.setState(SWstate);
-        NE.setState(SEstate);
-        SW.setState(NWstate);
-        SE.setState(NEstate);
-    }
 
     @Override
     public void draw(Graphics g) {

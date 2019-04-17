@@ -1,5 +1,6 @@
 package jdraw.figures;
 
+import jdraw.figures.handles.Handle;
 import jdraw.framework.Figure;
 import jdraw.framework.FigureEvent;
 import jdraw.framework.FigureHandle;
@@ -42,4 +43,21 @@ abstract public class AbstractFigure implements Figure {
     public List<FigureHandle> getHandles() {
         return handles;
     }
+
+    @Override
+    public void swapHorizontal() {
+        handles.forEach(h -> {
+            Handle handle = (Handle) h;
+            handle.setState(handle.getState().swapHorizontal());
+        });
+    }
+
+    @Override
+    public void swapVertical() {
+        handles.forEach(h -> {
+            Handle handle = (Handle) h;
+            handle.setState(handle.getState().swapVertical());
+        });
+    }
+
 }
