@@ -321,6 +321,18 @@ public class DrawModelTest {
         public Figure clone() {
             return null;
         }
+
+        @Override
+        public void initializeHandles() {
+        }
+
+        @Override
+        public void swapHorizontal() {
+        }
+
+        @Override
+        public void swapVertical() {
+        }
     }
 
 }

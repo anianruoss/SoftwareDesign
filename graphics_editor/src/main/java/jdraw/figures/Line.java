@@ -1,15 +1,13 @@
 package jdraw.figures;
 
 import jdraw.figures.handles.Handle;
-import jdraw.figures.handles.NorthWestHandleState;
-import jdraw.figures.handles.SouthEastHandleState;
-import jdraw.framework.Figure;
+import jdraw.figures.handles.LineHandleState;
 
 import java.awt.*;
 import java.awt.geom.Line2D;
 import java.util.ArrayList;
 
-public class Line extends AbstractFigure implements Figure {
+public class Line extends AbstractFigure {
     private final Line2D.Double line;
     private static final int TOL = 6;
 
@@ -27,19 +25,22 @@ public class Line extends AbstractFigure implements Figure {
     public void initializeHandles() {
         handles = new ArrayList<>(2);
 
-        handles.add(new Handle(new NorthWestHandleState(this)));
-        handles.add(new Handle(new SouthEastHandleState(this)));
+        handles.add(
+                new Handle(
+                        new LineHandleState(this, LineHandleState.Type.FIRST)
+                )
+        );
+        handles.add(
+                new Handle(
+                        new LineHandleState(this, LineHandleState.Type.SECOND)
+                )
+        );
     }
 
     @Override
     public void draw(Graphics g) {
-        int x1 = ((int) line.x1);
-        int y1 = ((int) line.y1);
-        int x2 = ((int) line.x2);
-        int y2 = ((int) line.y2);
-
         g.setColor(Color.BLACK);
-        g.drawLine(x1, y1, x2, y2);
+        g.drawLine((int) line.x1, (int) line.y1, (int) line.x2, (int) line.y2);
     }
 
     @Override
@@ -59,9 +60,9 @@ public class Line extends AbstractFigure implements Figure {
 
     @Override
     public void setBounds(Point origin, Point corner) {
-        Rectangle original = line.getBounds();
+        Line2D.Double original = (Line2D.Double) line.clone();
         line.setLine(origin, corner);
-        if (!original.equals(line.getBounds())) {
+        if (!original.equals(line)) {
             propagateFigureEvent();
         }
     }
@@ -69,6 +70,10 @@ public class Line extends AbstractFigure implements Figure {
     @Override
     public Rectangle getBounds() {
         return line.getBounds();
+    }
+
+    public Line2D getLine() {
+        return (Line2D) line.clone();
     }
 
 }
