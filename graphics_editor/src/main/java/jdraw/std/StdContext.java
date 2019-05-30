@@ -5,6 +5,7 @@
 package jdraw.std;
 
 import jdraw.figures.EllipseTool;
+import jdraw.figures.GroupFigure;
 import jdraw.figures.LineTool;
 import jdraw.figures.RectTool;
 import jdraw.framework.*;
@@ -101,11 +102,47 @@ public class StdContext extends AbstractContext {
 
         editMenu.addSeparator();
         JMenuItem group = new JMenuItem("Group");
-        group.setEnabled(false);
+        group.addActionListener(e -> {
+            List<Figure> selection = getView().getSelection();
+
+            if (selection != null && 1 < selection.size()) {
+                DrawModel drawModel = getModel();
+                DrawView drawView = getView();
+
+                selection.forEach(figure -> {
+                    drawModel.removeFigure(figure);
+                    drawView.removeFromSelection(figure);
+                });
+
+                GroupFigure groupFigure = new GroupFigure(selection);
+                drawModel.addFigure(groupFigure);
+                drawView.addToSelection(groupFigure);
+            }
+        });
+        group.setEnabled(true);
         editMenu.add(group);
 
         JMenuItem ungroup = new JMenuItem("Ungroup");
-        ungroup.setEnabled(false);
+        ungroup.addActionListener(actionEvent -> {
+            for (Figure f : getView().getSelection()) {
+                if (f instanceof FigureGroup) {
+                    DrawModel drawModel = getModel();
+                    DrawView drawView = getView();
+
+                    drawModel.removeFigure(f);
+                    drawView.removeFromSelection(f);
+
+                    ((FigureGroup) f).getFigureParts().forEach(
+                            figure -> {
+                                drawModel.addFigure(figure);
+                                drawView.addToSelection(figure);
+                            }
+                    );
+
+                }
+            }
+        });
+        ungroup.setEnabled(true);
         editMenu.add(ungroup);
 
         editMenu.addSeparator();
