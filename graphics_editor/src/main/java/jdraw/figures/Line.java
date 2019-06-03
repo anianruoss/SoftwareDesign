@@ -2,13 +2,14 @@ package jdraw.figures;
 
 import jdraw.figures.handles.Handle;
 import jdraw.figures.handles.LineHandleState;
+import jdraw.framework.Figure;
 
 import java.awt.*;
 import java.awt.geom.Line2D;
 import java.util.ArrayList;
 
 public class Line extends AbstractFigure {
-    private final Line2D.Double line;
+    private Line2D.Double line;
     private static final int TOL = 6;
 
     public Line(Point start, Point end) {
@@ -74,6 +75,15 @@ public class Line extends AbstractFigure {
 
     public Line2D getLine() {
         return (Line2D) line.clone();
+    }
+
+    @Override
+    public Figure clone() {
+        Line clone = (Line) super.clone();
+        clone.line = (Line2D.Double) line.clone();
+        clone.initializeHandles();
+
+        return clone;
     }
 
 }

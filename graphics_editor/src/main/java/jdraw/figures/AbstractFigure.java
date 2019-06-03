@@ -10,13 +10,20 @@ import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 abstract public class AbstractFigure implements Figure {
-    private final List<FigureListener> figureListenerList =
+    private List<FigureListener> figureListenerList =
             new CopyOnWriteArrayList<>();
     List<FigureHandle> handles;
 
     @Override
     public Figure clone() {
-        return null;
+        try {
+            AbstractFigure clone = (AbstractFigure) super.clone();
+            clone.figureListenerList = new CopyOnWriteArrayList<>();
+            return clone;
+
+        } catch (CloneNotSupportedException e) {
+            throw new InternalError(e.getMessage());
+        }
     }
 
     @Override

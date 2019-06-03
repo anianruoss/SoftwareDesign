@@ -91,9 +91,45 @@ public class StdContext extends AbstractContext {
         );
 
         editMenu.addSeparator();
-        editMenu.add("Cut").setEnabled(false);
-        editMenu.add("Copy").setEnabled(false);
-        editMenu.add("Paste").setEnabled(false);
+        JMenuItem cut = new JMenuItem("Cut");
+        JMenuItem copy = new JMenuItem("Copy");
+        JMenuItem paste = new JMenuItem("Paste");
+        cut.addActionListener(actionEvent -> {
+            DrawModel drawModel = getModel();
+            drawModel.clipboard.clear();
+
+            getView().getSelection().forEach(figure -> {
+                drawModel.removeFigure(figure);
+                drawModel.clipboard.add(figure);
+            });
+        });
+        copy.addActionListener(actionEvent -> {
+            DrawModel drawModel = getModel();
+            drawModel.clipboard.clear();
+            getView().getSelection().forEach(
+                    figure -> drawModel.clipboard.add(figure.clone())
+            );
+        });
+        paste.addActionListener(actionEvent -> {
+            DrawModel drawModel = getModel();
+            DrawView drawView = getView();
+            drawView.clearSelection();
+
+            drawModel.clipboard.get().forEach(
+                    figure -> {
+                        figure.move(10, 10);
+                        Figure clone = figure.clone();
+                        drawModel.addFigure(clone);
+                        drawView.addToSelection(clone);
+                    }
+            );
+        });
+        cut.setEnabled(true);
+        copy.setEnabled(true);
+        paste.setEnabled(true);
+        editMenu.add(cut);
+        editMenu.add(copy);
+        editMenu.add(paste);
 
         editMenu.addSeparator();
         JMenuItem clear = new JMenuItem("Clear");

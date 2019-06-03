@@ -1,9 +1,11 @@
 package jdraw.figures;
 
+import jdraw.framework.Figure;
+
 import java.awt.*;
 
 abstract public class AbstractRectangularFigure extends AbstractFigure {
-    private final Rectangle rectangle;
+    private Rectangle rectangle;
 
     AbstractRectangularFigure(Point origin) {
         rectangle = new Rectangle(origin);
@@ -37,4 +39,13 @@ abstract public class AbstractRectangularFigure extends AbstractFigure {
         return rectangle.getBounds();
     }
 
+    @Override
+    public Figure clone() {
+        AbstractRectangularFigure clone =
+                (AbstractRectangularFigure) super.clone();
+        clone.rectangle = (Rectangle) rectangle.clone();
+        clone.initializeHandles();
+
+        return clone;
+    }
 }

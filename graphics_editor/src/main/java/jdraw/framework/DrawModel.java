@@ -5,6 +5,9 @@
 
 package jdraw.framework;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * The class DrawModel represents the model of a drawing, i.e.
  * all figures stored in a graphic. Every draw view refers to a
@@ -15,6 +18,23 @@ package jdraw.framework;
  * @see DrawView
  */
 public interface DrawModel {
+    ClipBoard clipboard = new ClipBoard();
+
+    class ClipBoard {
+        public List<Figure> figures = new ArrayList<>();
+
+        public void add(Figure figure) {
+            figures.add(figure);
+        }
+
+        public List<Figure> get() {
+            return figures;
+        }
+
+        public void clear() {
+            figures.clear();
+        }
+    }
 
     /**
      * Adds a new figure to the draw model.

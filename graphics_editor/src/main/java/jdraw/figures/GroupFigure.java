@@ -7,11 +7,10 @@ import jdraw.framework.FigureGroup;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.LinkedList;
 import java.util.List;
 
 public class GroupFigure extends AbstractFigure implements FigureGroup {
-    private List<Figure> figures = new LinkedList<>();
+    private List<Figure> figures = new ArrayList<>();
 
     public GroupFigure(List<Figure> figures) {
         this.figures.addAll(figures);
@@ -64,5 +63,15 @@ public class GroupFigure extends AbstractFigure implements FigureGroup {
     @Override
     public Iterable<Figure> getFigureParts() {
         return Collections.unmodifiableList(figures);
+    }
+
+    @Override
+    public Figure clone() {
+        GroupFigure clone = (GroupFigure) super.clone();
+        clone.figures = new ArrayList<>();
+        figures.forEach(figure -> clone.figures.add(figure.clone()));
+        clone.initializeHandles();
+
+        return clone;
     }
 }
