@@ -111,4 +111,8 @@ public interface Figure extends Serializable, Cloneable {
     void swapHorizontal();
 
     void swapVertical();
+
+    boolean isInstanceOf(Class<?> type);
+
+    <T> T getInstanceOf(Class<T> type);
 }

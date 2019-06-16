@@ -1,5 +1,6 @@
 package jdraw.test;
 
+import jdraw.figures.BorderDecorator;
 import jdraw.figures.Ellipse;
 import jdraw.figures.Line;
 import jdraw.figures.Rect;
@@ -40,9 +41,14 @@ public class FigureTest {
         Line fLine = new Line(fStart, fEnd);
         Line gLine = new Line(gStart, gEnd);
 
-
         return Arrays.asList(new Object[][]{
-                {fEllipse, gEllipse}, {fRectangle, gRectangle}, {fLine, gLine}
+                {fEllipse, gEllipse},
+                {fRectangle, gRectangle},
+                {fLine, gLine},
+                {
+                        new BorderDecorator(fEllipse.clone()),
+                        new BorderDecorator(gEllipse.clone())
+                }
         });
     }
 
@@ -102,15 +108,30 @@ public class FigureTest {
         f1.addFigureListener(new UpdateListener(f2));
         f2.addFigureListener(new UpdateListener(f1));
 
+        int checkpoint1 = f1.isInstanceOf(BorderDecorator.class) ? 10 : 15;
+        int checkpoint2 = f1.isInstanceOf(BorderDecorator.class) ? 15 : 20;
+
         f2.move(5, 5);
         assertEquals("Position of the two figures must be equal", f1.getBounds().getLocation(), f2.getBounds().getLocation());
-        assertEquals("Figures must both be at position x=15", 15, f1.getBounds().x);
-        assertEquals("Figures must both be at position y=15", 15, f1.getBounds().y);
+        assertEquals(
+                "Figures must both be at position x=" + checkpoint1,
+                checkpoint1, f1.getBounds().x
+        );
+        assertEquals(
+                "Figures must both be at position y=" + checkpoint1,
+                checkpoint1, f1.getBounds().y
+        );
 
         f1.move(5, 5);
         assertEquals("Position of the two figures must be equal", f1.getBounds().getLocation(), f2.getBounds().getLocation());
-        assertEquals("Figures must both be at position x=20", 20, f1.getBounds().x);
-        assertEquals("Figures must both be at position y=20", 20, f1.getBounds().y);
+        assertEquals(
+                "Figures must both be at position x=" + checkpoint2,
+                checkpoint2, f1.getBounds().x
+        );
+        assertEquals(
+                "Figures must both be at position y=" + checkpoint2,
+                checkpoint2, f1.getBounds().y
+        );
     }
 
     class TestListener implements FigureListener {

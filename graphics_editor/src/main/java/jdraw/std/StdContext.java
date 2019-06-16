@@ -4,10 +4,7 @@
  */
 package jdraw.std;
 
-import jdraw.figures.EllipseTool;
-import jdraw.figures.GroupFigure;
-import jdraw.figures.LineTool;
-import jdraw.figures.RectTool;
+import jdraw.figures.*;
 import jdraw.framework.*;
 import jdraw.grids.FixedGrid;
 import jdraw.grids.SnapGrid;
@@ -220,6 +217,24 @@ public class StdContext extends AbstractContext {
         grid.add(deactivateGrid);
 
         editMenu.add(grid);
+
+        JMenu decoratorsMenu = new JMenu("Decorators...");
+        editMenu.add(decoratorsMenu);
+        JMenuItem addBorder = new JMenuItem("Add Border Decorator");
+        decoratorsMenu.add(addBorder);
+        addBorder.addActionListener(actionEvent -> {
+            DrawView drawView = getView();
+            DrawModel drawModel = getModel();
+            List<Figure> selection = drawView.getSelection();
+            drawView.clearSelection();
+
+            selection.forEach(figure -> {
+                BorderDecorator decorator = new BorderDecorator(figure);
+                drawModel.removeFigure(figure);
+                drawModel.addFigure(decorator);
+                drawView.addToSelection(decorator);
+            });
+        });
 
         return editMenu;
     }

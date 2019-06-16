@@ -333,6 +333,16 @@ public class DrawModelTest {
         @Override
         public void swapVertical() {
         }
+
+        @Override
+        public boolean isInstanceOf(Class<?> type) {
+            return false;
+        }
+
+        @Override
+        public <T> T getInstanceOf(Class<T> type) {
+            return null;
+        }
     }
 
 }
