@@ -88,7 +88,7 @@ public interface FigureHandle {
      *
      * @param x the current x position
      * @param y the current y position
-     * @param e the mouse event which stoped the start interaction
+     * @param e the mouse event which stopped the start interaction
      * @param v the view in which the interaction is performed
      */
     void stopInteraction(int x, int y, MouseEvent e, DrawView v);

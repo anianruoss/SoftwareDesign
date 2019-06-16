@@ -7,11 +7,12 @@ import jdraw.framework.FigureHandle;
 import java.awt.*;
 import java.awt.event.MouseEvent;
 
-public class OwnerDecorator implements FigureHandle {
+public class OwnerDecorator extends Handle {
     private FigureHandle inner;
     private Figure owner;
 
     public OwnerDecorator(FigureHandle figureHandle, Figure owner) {
+        super(null);
         inner = figureHandle;
         this.owner = owner;
     }
@@ -54,5 +55,17 @@ public class OwnerDecorator implements FigureHandle {
     @Override
     public void stopInteraction(int x, int y, MouseEvent e, DrawView v) {
         inner.stopInteraction(x, y, e, v);
+    }
+
+    @Override
+    public HandleState getState() {
+        return inner instanceof Handle ? ((Handle) inner).getState() : null;
+    }
+
+    @Override
+    public void setState(HandleState state) {
+        if (inner instanceof Handle) {
+            ((Handle) inner).setState(state);
+        }
     }
 }

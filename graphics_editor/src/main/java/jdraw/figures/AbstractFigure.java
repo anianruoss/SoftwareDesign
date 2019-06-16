@@ -76,6 +76,4 @@ abstract public class AbstractFigure implements Figure {
     public <T> T getInstanceOf(Class<T> type) {
         return type.cast(this); // checked version of (T)this
     }
-
-
 }

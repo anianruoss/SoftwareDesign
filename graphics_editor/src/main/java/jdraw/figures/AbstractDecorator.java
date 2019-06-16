@@ -9,12 +9,18 @@ import jdraw.framework.FigureListener;
 import java.awt.*;
 import java.util.List;
 
-public class AbstractDecorator extends AbstractFigure implements FigureListener {
-    Figure inner;
+public abstract class AbstractDecorator
+        extends AbstractFigure
+        implements FigureListener {
+    private Figure inner;
 
     public AbstractDecorator(Figure figure) {
         inner = figure;
         inner.addFigureListener(this);
+    }
+
+    public Figure getInner() {
+        return inner;
     }
 
     @Override
@@ -97,6 +103,10 @@ public class AbstractDecorator extends AbstractFigure implements FigureListener 
         } else {
             return inner.getInstanceOf(type);
         }
+    }
+
+    public Figure unwrap() {
+        return inner;
     }
 
 }

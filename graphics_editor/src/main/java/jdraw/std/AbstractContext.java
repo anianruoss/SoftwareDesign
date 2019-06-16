@@ -32,11 +32,11 @@ public abstract class AbstractContext extends JFrame implements DrawContext {
     /**
      * Default width of view.
      */
-    private static final int DEFAULT_WIDTH = 300;
+    private static final int DEFAULT_WIDTH = 600;
     /**
      * Default height of view.
      */
-    private static final int DEFAULT_HEIGHT = 200;
+    private static final int DEFAULT_HEIGHT = 400;
     /**
      * global counter of displayed windows.
      */
@@ -52,7 +52,7 @@ public abstract class AbstractContext extends JFrame implements DrawContext {
     /**
      * list of the figure factories.
      */
-    private List<DrawToolFactory> toolFactories = new LinkedList<>();
+    private List<DrawToolFactory> toolFactories;
     /**
      * width of this window in pixels.
      */
@@ -260,9 +260,7 @@ public abstract class AbstractContext extends JFrame implements DrawContext {
         JMenu windowMenu = new JMenu("Window");
         JMenuItem newWindow = new JMenuItem("New Window");
         windowMenu.add(newWindow);
-        newWindow.addActionListener(e -> {
-            JDraw.getContext().showView();
-        });
+        newWindow.addActionListener(e -> JDraw.getContext().showView());
         return windowMenu;
     }
 

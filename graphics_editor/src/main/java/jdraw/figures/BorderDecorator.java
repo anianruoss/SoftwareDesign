@@ -13,6 +13,7 @@ public class BorderDecorator extends AbstractDecorator {
 
     @Override
     public void draw(Graphics g) {
+        Figure inner = getInner();
         inner.draw(g);
 
         Rectangle bounds = inner.getBounds();
@@ -38,7 +39,7 @@ public class BorderDecorator extends AbstractDecorator {
 
     @Override
     public Rectangle getBounds() {
-        Rectangle bounds = (Rectangle) inner.getBounds().clone();
+        Rectangle bounds = (Rectangle) getInner().getBounds().clone();
         bounds.grow(offset, offset);
 
         return bounds;

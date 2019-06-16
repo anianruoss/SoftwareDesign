@@ -4,7 +4,11 @@
  */
 package jdraw.std;
 
-import jdraw.figures.*;
+import jdraw.actions.*;
+import jdraw.figures.EllipseTool;
+import jdraw.figures.GroupFigure;
+import jdraw.figures.LineTool;
+import jdraw.figures.RectTool;
 import jdraw.framework.*;
 import jdraw.grids.FixedGrid;
 import jdraw.grids.SnapGrid;
@@ -220,21 +224,37 @@ public class StdContext extends AbstractContext {
 
         JMenu decoratorsMenu = new JMenu("Decorators...");
         editMenu.add(decoratorsMenu);
-        JMenuItem addBorder = new JMenuItem("Add Border Decorator");
-        decoratorsMenu.add(addBorder);
-        addBorder.addActionListener(actionEvent -> {
-            DrawView drawView = getView();
-            DrawModel drawModel = getModel();
-            List<Figure> selection = drawView.getSelection();
-            drawView.clearSelection();
 
-            selection.forEach(figure -> {
-                BorderDecorator decorator = new BorderDecorator(figure);
-                drawModel.removeFigure(figure);
-                drawModel.addFigure(decorator);
-                drawView.addToSelection(decorator);
-            });
-        });
+        JMenuItem addBorder = new JMenuItem("Add Border");
+        decoratorsMenu.add(addBorder);
+        AddBorderAction addBorderAction = new AddBorderAction(this);
+        addBorder.addActionListener(addBorderAction);
+
+        JMenuItem removeBorder = new JMenuItem("Remove Border");
+        decoratorsMenu.add(removeBorder);
+        RemoveBorderAction removeBorderAction = new RemoveBorderAction(this);
+        removeBorder.addActionListener(removeBorderAction);
+
+        JMenuItem addBundle = new JMenuItem("Add Bundle");
+        decoratorsMenu.add(addBundle);
+        AddBundleAction addBundleAction = new AddBundleAction(this);
+        addBundle.addActionListener(addBundleAction);
+
+        JMenuItem removeBundle = new JMenuItem("Remove Bundle");
+        decoratorsMenu.add(removeBundle);
+        RemoveBundleAction removeBundleAction = new RemoveBundleAction(this);
+        removeBundle.addActionListener(removeBundleAction);
+
+        JMenuItem addAnimation = new JMenuItem("Add Animation");
+        decoratorsMenu.add(addAnimation);
+        AddAnimationAction addAnimationAction = new AddAnimationAction(this);
+        addAnimation.addActionListener(addAnimationAction);
+
+        JMenuItem removeAnimation = new JMenuItem("Remove Animation");
+        decoratorsMenu.add(removeAnimation);
+        RemoveAnimationAction removeAnimationAction =
+                new RemoveAnimationAction(this);
+        removeAnimation.addActionListener(removeAnimationAction);
 
         return editMenu;
     }
