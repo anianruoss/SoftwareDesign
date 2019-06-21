@@ -24,6 +24,4 @@ public abstract class AbstractHandleState implements HandleState {
     @Override
     public void stopInteraction(int x, int y, MouseEvent e, DrawView v) {
     }
-
-
 }

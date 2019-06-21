@@ -48,5 +48,4 @@ public class NorthWestHandleState extends AbstractHandleState {
     public HandleState swapVertical() {
         return new SouthWestHandleState(getOwner());
     }
-
 }

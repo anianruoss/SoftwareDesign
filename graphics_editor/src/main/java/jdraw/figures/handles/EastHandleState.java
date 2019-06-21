@@ -44,5 +44,4 @@ public class EastHandleState extends AbstractHandleState {
     public HandleState swapVertical() {
         return this;
     }
-
 }
