@@ -1,5 +1,6 @@
 package jdraw.actions;
 
+import jdraw.commands.DecoratorCommand;
 import jdraw.figures.AbstractDecorator;
 import jdraw.framework.DrawContext;
 import jdraw.framework.DrawModel;
@@ -44,6 +45,12 @@ public abstract class AbstractAddDecoratorAction extends AbstractAction {
                 drawModel.removeFigure(figure);
                 drawModel.addFigure(decoratedFigure);
                 drawView.addToSelection(decoratedFigure);
+
+                drawModel.getDrawCommandHandler().addCommand(
+                        new DecoratorCommand(
+                                drawModel, Decorator, decoratedFigure, true
+                        )
+                );
             });
         }
     }

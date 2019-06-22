@@ -10,8 +10,7 @@ import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 abstract public class AbstractFigure implements Figure {
-    private List<FigureListener> figureListenerList =
-            new CopyOnWriteArrayList<>();
+    List<FigureListener> figureListenerList = new CopyOnWriteArrayList<>();
     List<FigureHandle> handles;
 
     @Override

@@ -16,7 +16,22 @@ public abstract class AbstractDecorator
 
     public AbstractDecorator(Figure figure) {
         inner = figure;
-        inner.addFigureListener(this);
+    }
+
+    @Override
+    public void addFigureListener(FigureListener listener) {
+        super.addFigureListener(listener);
+        if (!figureListenerList.isEmpty()) {
+            inner.addFigureListener(this);
+        }
+    }
+
+    @Override
+    public void removeFigureListener(FigureListener listener) {
+        super.removeFigureListener(listener);
+        if (figureListenerList.isEmpty()) {
+            inner.removeFigureListener(this);
+        }
     }
 
     public Figure getInner() {

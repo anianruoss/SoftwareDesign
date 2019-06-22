@@ -1,5 +1,6 @@
 package jdraw.actions;
 
+import jdraw.commands.DecoratorCommand;
 import jdraw.figures.AbstractDecorator;
 import jdraw.framework.DrawContext;
 import jdraw.framework.DrawModel;
@@ -9,7 +10,7 @@ import jdraw.framework.Figure;
 import java.awt.event.ActionEvent;
 import java.util.List;
 
-public class AbstractRemoveDecoratorAction extends AbstractAction {
+public abstract class AbstractRemoveDecoratorAction extends AbstractAction {
     private final Class<? extends AbstractDecorator> Decorator;
 
     public AbstractRemoveDecoratorAction(
@@ -33,6 +34,12 @@ public class AbstractRemoveDecoratorAction extends AbstractAction {
                     drawModel.removeFigure(figure);
                     drawModel.addFigure(inner);
                     drawView.addToSelection(inner);
+
+                    drawModel.getDrawCommandHandler().addCommand(
+                            new DecoratorCommand(
+                                    drawModel, Decorator, inner, false
+                            )
+                    );
                 }
             });
         }

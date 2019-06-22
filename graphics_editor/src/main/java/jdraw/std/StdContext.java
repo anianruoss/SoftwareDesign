@@ -6,7 +6,6 @@ package jdraw.std;
 
 import jdraw.actions.*;
 import jdraw.figures.EllipseTool;
-import jdraw.figures.GroupFigure;
 import jdraw.figures.LineTool;
 import jdraw.figures.RectTool;
 import jdraw.framework.*;
@@ -93,44 +92,23 @@ public class StdContext extends AbstractContext {
 
         editMenu.addSeparator();
         JMenuItem cut = new JMenuItem("Cut");
-        JMenuItem copy = new JMenuItem("Copy");
-        JMenuItem paste = new JMenuItem("Paste");
-        cut.addActionListener(actionEvent -> {
-            DrawModel drawModel = getModel();
-            drawModel.clipboard.clear();
-
-            getView().getSelection().forEach(figure -> {
-                drawModel.removeFigure(figure);
-                drawModel.clipboard.add(figure);
-            });
-        });
-        copy.addActionListener(actionEvent -> {
-            DrawModel drawModel = getModel();
-            drawModel.clipboard.clear();
-            getView().getSelection().forEach(
-                    figure -> drawModel.clipboard.add(figure.clone())
-            );
-        });
-        paste.addActionListener(actionEvent -> {
-            DrawModel drawModel = getModel();
-            DrawView drawView = getView();
-            drawView.clearSelection();
-
-            drawModel.clipboard.get().forEach(
-                    figure -> {
-                        figure.move(10, 10);
-                        Figure clone = figure.clone();
-                        drawModel.addFigure(clone);
-                        drawView.addToSelection(clone);
-                    }
-            );
-        });
         cut.setEnabled(true);
-        copy.setEnabled(true);
-        paste.setEnabled(true);
         editMenu.add(cut);
+        CutAction cutAction = new CutAction(this);
+        cut.addActionListener(cutAction);
+
+        JMenuItem copy = new JMenuItem("Copy");
+        copy.setEnabled(true);
         editMenu.add(copy);
+        CopyAction copyAction = new CopyAction(this);
+        copy.addActionListener(copyAction);
+
+        JMenuItem paste = new JMenuItem("Paste");
+        paste.setEnabled(true);
         editMenu.add(paste);
+        PasteAction pasteAction = new PasteAction(this);
+        paste.addActionListener(pasteAction);
+
 
         editMenu.addSeparator();
         JMenuItem clear = new JMenuItem("Clear");
@@ -139,48 +117,16 @@ public class StdContext extends AbstractContext {
 
         editMenu.addSeparator();
         JMenuItem group = new JMenuItem("Group");
-        group.addActionListener(e -> {
-            List<Figure> selection = getView().getSelection();
-
-            if (selection != null && 1 < selection.size()) {
-                DrawModel drawModel = getModel();
-                DrawView drawView = getView();
-
-                selection.forEach(figure -> {
-                    drawModel.removeFigure(figure);
-                    drawView.removeFromSelection(figure);
-                });
-
-                GroupFigure groupFigure = new GroupFigure(selection);
-                drawModel.addFigure(groupFigure);
-                drawView.addToSelection(groupFigure);
-            }
-        });
         group.setEnabled(true);
         editMenu.add(group);
+        GroupAction groupAction = new GroupAction(this);
+        group.addActionListener(groupAction);
 
         JMenuItem ungroup = new JMenuItem("Ungroup");
-        ungroup.addActionListener(actionEvent -> {
-            for (Figure f : getView().getSelection()) {
-                if (f instanceof FigureGroup) {
-                    DrawModel drawModel = getModel();
-                    DrawView drawView = getView();
-
-                    drawModel.removeFigure(f);
-                    drawView.removeFromSelection(f);
-
-                    ((FigureGroup) f).getFigureParts().forEach(
-                            figure -> {
-                                drawModel.addFigure(figure);
-                                drawView.addToSelection(figure);
-                            }
-                    );
-
-                }
-            }
-        });
         ungroup.setEnabled(true);
         editMenu.add(ungroup);
+        UngroupAction ungroupAction = new UngroupAction(this);
+        ungroup.addActionListener(ungroupAction);
 
         editMenu.addSeparator();
 

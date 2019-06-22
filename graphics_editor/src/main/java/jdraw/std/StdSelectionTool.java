@@ -5,6 +5,7 @@
 
 package jdraw.std;
 
+import jdraw.commands.MoveCommand;
 import jdraw.framework.*;
 
 import javax.swing.*;

@@ -5,6 +5,7 @@
 
 package jdraw.std;
 
+import jdraw.commands.StackDrawCommandHandler;
 import jdraw.framework.*;
 
 import java.util.ArrayList;
@@ -23,8 +24,7 @@ public class StdDrawModel implements DrawModel, FigureListener {
     /**
      * The draw command handler. Initialized here with a dummy implementation.
      */
-    // TODO initialize with your implementation of the undo/redo-assignment.
-    private DrawCommandHandler handler = new EmptyDrawCommandHandler();
+    private DrawCommandHandler handler = new StackDrawCommandHandler();
     private final List<Figure> figureList = new ArrayList<>();
     private final List<DrawModelListener> drawModelListenerList =
             new CopyOnWriteArrayList<>();
