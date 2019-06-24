@@ -1,0 +1,49 @@
+<?xml version="1.0"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN"
+        "http://www.springframework.org/dtd/spring-beans-2.0.dtd">
+
+<beans>
+    <bean id="drawModel" class="jdraw.std.StdDrawModel"/>
+
+    <bean id="drawView" class="jdraw.std.StdDrawView" scope="prototype">
+        <constructor-arg ref="drawModel"/>
+    </bean>
+
+    <bean id="drawContext" class="jdraw.std.StdContext" scope="prototype"
+          init-method="initGUI">
+        <constructor-arg ref="drawView"/>
+
+        <property name="width" value="600"/>
+        <property name="height" value="400"/>
+
+        <constructor-arg>
+            <list>
+                <ref bean="line"/>
+                <ref bean="rectangle"/>
+                <ref bean="ellipse"/>
+                <ref bean="swisscross"/>
+            </list>
+        </constructor-arg>
+    </bean>
+
+    <bean id="rectangle" class="jdraw.figures.RectangleToolFactory">
+        <property name="name" value="Rectangle"/>
+        <property name="iconName" value="rectangle.png"/>
+    </bean>
+
+    <bean id="line" class="jdraw.figures.LineToolFactory">
+        <property name="name" value="Line"/>
+        <property name="iconName" value="line.png"/>
+    </bean>
+
+    <bean id="ellipse" class="jdraw.figures.EllipseToolFactory">
+        <property name="name" value="Ellipse"/>
+        <property name="iconName" value="oval.png"/>
+    </bean>
+
+    <bean id="swisscross" class="jdraw.figures.ernst.SwissCrossToolFactory">
+        <property name="name" value="Swisscross"/>
+        <property name="iconName" value="swisscross.png"/>
+    </bean>
+
+</beans>
